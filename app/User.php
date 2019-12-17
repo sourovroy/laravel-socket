@@ -27,4 +27,24 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Relation with `Message` model
+     */
+    public function messages()
+    {
+        return $this->hasMany( Message::class, 'owner_id' );
+    }
+
+    /**
+     * Get messages of a receiver
+     */
+    public function getMessagesByReceiverId( $receiverId, $limit = 20 )
+    {
+        return $this->messages()
+                    ->where( 'receiver_id', '=', $receiverId )
+                    ->limit( $limit )
+                    ->orderBy( 'id', 'desc' )
+                    ->get();
+    }
 }

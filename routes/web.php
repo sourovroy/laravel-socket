@@ -11,8 +11,17 @@
 |
 */
 
-Route::get('/', 'HomeController@homePage');
+Route::middleware( 'auth' )->group(function () {
+
+    Route::get('/', 'ChatController@index');
+    Route::get('/me', 'UserController@me');
+    Route::post('/chat/send', 'ChatController@send');
+
+    // Messages
+    Route::post('/messages', 'MessageController@store');
+
+});
 
 Auth::routes();
 
-// Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/logout', 'Auth\LoginController@logout');

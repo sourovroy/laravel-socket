@@ -6,7 +6,7 @@ use App\Events\UserSignedUp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 
-class HomeController extends Controller
+class UserController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -33,5 +33,13 @@ class HomeController extends Controller
         event( new UserSignedUp('jhondoe') );
 
         return view('welcome');
+    }
+
+    /**
+     * Get own user data
+     */
+    public function me()
+    {
+        return auth()->user();
     }
 }
